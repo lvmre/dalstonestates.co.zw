@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#2d5016;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#4a7c59;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#d4af37;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#f4e28c;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="512" height="512" fill="url(#bg)" rx="85"/>
+  
+  <!-- Circular Border -->
+  <circle cx="256" cy="256" r="200" fill="none" stroke="url(#gold)" stroke-width="8"/>
+  
+  <!-- Center DE Letters -->
+  <text x="256" y="285" font-family="Playfair Display, serif" font-size="120" font-weight="700" 
+        text-anchor="middle" fill="url(#gold)">DE</text>
+  
+  <!-- Top Curved Text -->
+  <defs>
+    <path id="circle-top" d="M 256,56 A 200,200 0 0,1 456,256"/>
+  </defs>
+  <text font-family="Poppins, sans-serif" font-size="24" font-weight="600" fill="#faf9f6">
+    <textPath href="#circle-top" startOffset="8%">DALSTON ESTATES</textPath>
+  </text>
+  
+  <!-- Bottom Curved Text -->
+  <defs>
+    <path id="circle-bottom" d="M 456,256 A 200,200 0 0,1 256,456"/>
+  </defs>
+  <text font-family="Poppins, sans-serif" font-size="24" font-weight="600" fill="#faf9f6">
+    <textPath href="#circle-bottom" startOffset="15%">PREMIUM AGRICULTURE</textPath>
+  </text>
+  
+  <!-- Agricultural Accent Elements -->
+  <g opacity="0.4">
+    <!-- Decorative wheat/leaf elements -->
+    <path d="M 100,100 L 120,140 L 100,180" fill="none" stroke="#d4af37" stroke-width="4"/>
+    <path d="M 412,100 L 392,140 L 412,180" fill="none" stroke="#d4af37" stroke-width="4"/>
+    <path d="M 100,332 L 120,372 L 100,412" fill="none" stroke="#d4af37" stroke-width="4"/>
+    <path d="M 412,332 L 392,372 L 412,412" fill="none" stroke="#d4af37" stroke-width="4"/>
+    
+    <!-- Decorative dots -->
+    <circle cx="150" cy="150" r="6" fill="#d4af37"/>
+    <circle cx="362" cy="150" r="6" fill="#d4af37"/>
+    <circle cx="150" cy="362" r="6" fill="#d4af37"/>
+    <circle cx="362" cy="362" r="6" fill="#d4af37"/>
+  </g>
+</svg>

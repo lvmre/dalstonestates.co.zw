@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="180" height="180" viewBox="0 0 180 180">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#2d5016;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#4a7c59;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#d4af37;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#f4e28c;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="180" height="180" fill="url(#bg)" rx="30"/>
+  
+  <!-- Circular Border -->
+  <circle cx="90" cy="90" r="70" fill="none" stroke="url(#gold)" stroke-width="3"/>
+  
+  <!-- Center DE Letters -->
+  <text x="90" y="105" font-family="serif" font-size="42" font-weight="bold" 
+        text-anchor="middle" fill="url(#gold)">DE</text>
+  
+  <!-- Agricultural dots -->
+  <circle cx="45" cy="45" r="3" fill="#d4af37" opacity="0.6"/>
+  <circle cx="135" cy="45" r="3" fill="#d4af37" opacity="0.6"/>
+  <circle cx="45" cy="135" r="3" fill="#d4af37" opacity="0.6"/>
+  <circle cx="135" cy="135" r="3" fill="#d4af37" opacity="0.6"/>
+</svg>
