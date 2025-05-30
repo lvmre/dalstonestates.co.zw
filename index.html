@@ -944,11 +944,91 @@
 
         .notify-btn:hover::after {
             transform: translate(-50%, -50%) scale(1);
-        }
-
-        .notify-btn span {
+        }        .notify-btn span {
             position: relative;
             z-index: 1;
+        }
+
+        /* A/B Testing Countdown Variants */
+        .countdown-modern {
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 20px;
+            padding: 1rem;
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+        }
+
+        .countdown-minimal {
+            background: none;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            padding: 0.5rem;
+        }
+
+        .countdown-minimal .countdown-item {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            margin: 0 2px;
+        }
+
+        /* Enhanced Focus States for Accessibility */
+        .notify-btn:focus-visible,
+        .form-input:focus-visible,
+        .social-link:focus-visible {
+            outline: 3px solid var(--accent-gold);
+            outline-offset: 2px;
+        }
+
+        /* Smart Loading States */
+        .form-processing {
+            pointer-events: none;
+            opacity: 0.7;
+        }
+
+        .form-success {
+            background: linear-gradient(135deg, #4a7c59, #2d5016) !important;
+        }
+
+        /* Performance-optimized animations */
+        @media (prefers-reduced-motion: no-preference) {
+            .interactive-card {
+                animation: float 6s ease-in-out infinite;
+            }
+
+            @keyframes float {
+                0%, 100% { transform: translateY(0px); }
+                50% { transform: translateY(-10px); }
+            }
+
+            .seeds-progress::before {
+                animation: seedGrow 2s ease-out forwards;
+            }
+
+            @keyframes seedGrow {
+                0% { transform: scale(0) rotate(0deg); }
+                50% { transform: scale(1.2) rotate(180deg); }
+                100% { transform: scale(1) rotate(360deg); }
+            }
+        }
+
+        /* Advanced Typography Enhancement */
+        .countdown-title,
+        .form-title {
+            text-rendering: optimizeLegibility;
+            -webkit-font-feature-settings: "liga", "kern";
+            font-feature-settings: "liga", "kern";
+        }
+
+        /* Critical CSS for above-the-fold content */
+        .hero-section {
+            contain: layout style paint;
+            will-change: transform;
+        }
+
+        /* Memory-efficient particle container */
+        .particle-canvas {
+            contain: strict;
+            transform: translateZ(0);
         }
     </style>
 </head>
@@ -1676,9 +1756,381 @@
                     setTimeout(() => {
                         visitorCounter.style.transform = 'scale(1)';
                     }, 200);
-                }
-            }, 8000); // Update every 8 seconds
+                }            }, 8000); // Update every 8 seconds
         }
+
+        // Advanced Performance Analytics and Optimization
+        function monitorPerformance() {
+            if ('PerformanceObserver' in window) {
+                // Monitor Core Web Vitals
+                const observer = new PerformanceObserver((list) => {
+                    for (const entry of list.getEntries()) {
+                        if (entry.entryType === 'largest-contentful-paint') {
+                            console.log('LCP:', entry.startTime);
+                        }
+                        if (entry.entryType === 'first-input') {
+                            console.log('FID:', entry.processingStart - entry.startTime);
+                        }
+                        if (entry.entryType === 'layout-shift') {
+                            if (!entry.hadRecentInput) {
+                                console.log('CLS:', entry.value);
+                            }
+                        }
+                    }
+                });
+
+                observer.observe({ entryTypes: ['largest-contentful-paint', 'first-input', 'layout-shift'] });
+            }
+
+            // Memory usage monitoring
+            if ('memory' in performance) {
+                setInterval(() => {
+                    const memory = performance.memory;
+                    if (memory.usedJSHeapSize > memory.jsHeapSizeLimit * 0.9) {
+                        console.warn('High memory usage detected');
+                        // Could trigger cleanup if needed
+                    }
+                }, 30000);
+            }
+
+            // Network information
+            if ('connection' in navigator) {
+                const connection = navigator.connection;
+                console.log('Network:', connection.effectiveType, 'Downlink:', connection.downlink);
+                
+                // Adjust features based on connection speed
+                if (connection.effectiveType === 'slow-2g' || connection.effectiveType === '2g') {
+                    // Reduce animations for slow connections
+                    document.documentElement.style.setProperty('--transition-normal', '0.1s');
+                }
+            }
+        }
+
+        // Advanced User Engagement Analytics
+        class EngagementTracker {
+            constructor() {
+                this.startTime = Date.now();
+                this.interactions = 0;
+                this.scrollDepth = 0;
+                this.timeOnPage = 0;
+                this.init();
+            }
+
+            init() {
+                // Track interactions
+                document.addEventListener('click', () => this.interactions++);
+                document.addEventListener('scroll', this.trackScrollDepth.bind(this));
+                
+                // Track time on page
+                setInterval(() => {
+                    this.timeOnPage = Date.now() - this.startTime;
+                }, 1000);
+
+                // Send analytics before page unload
+                window.addEventListener('beforeunload', () => {
+                    this.sendAnalytics();
+                });
+            }
+
+            trackScrollDepth() {
+                const scrolled = window.scrollY;
+                const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+                const currentDepth = Math.round((scrolled / maxScroll) * 100);
+                
+                if (currentDepth > this.scrollDepth) {
+                    this.scrollDepth = currentDepth;
+                }
+            }
+
+            sendAnalytics() {
+                const data = {
+                    timeOnPage: this.timeOnPage,
+                    interactions: this.interactions,
+                    scrollDepth: this.scrollDepth,
+                    deviceType: /Mobi|Android/i.test(navigator.userAgent) ? 'mobile' : 'desktop',
+                    timestamp: new Date().toISOString()
+                };
+                
+                // Store locally for now (could send to analytics service)
+                localStorage.setItem('dalston_engagement', JSON.stringify(data));
+                console.log('Engagement data:', data);
+            }
+        }
+
+        // Initialize engagement tracking
+        const engagementTracker = new EngagementTracker();
+
+        // Advanced A/B Testing Framework
+        class ABTestManager {
+            constructor() {
+                this.tests = {
+                    'button_color': {
+                        variants: ['gold', 'green', 'blue'],
+                        current: this.getVariant('button_color')
+                    },
+                    'countdown_style': {
+                        variants: ['classic', 'modern', 'minimal'],
+                        current: this.getVariant('countdown_style')
+                    }
+                };
+                this.applyTests();
+            }
+
+            getVariant(testName) {
+                let variant = localStorage.getItem(`ab_test_${testName}`);
+                if (!variant) {
+                    const test = this.tests[testName];
+                    variant = test.variants[Math.floor(Math.random() * test.variants.length)];
+                    localStorage.setItem(`ab_test_${testName}`, variant);
+                }
+                return variant;
+            }
+
+            applyTests() {
+                // Apply button color test
+                const buttonVariant = this.tests.button_color.current;
+                const button = document.querySelector('.notify-btn');
+                if (button) {
+                    switch(buttonVariant) {
+                        case 'green':
+                            button.style.background = 'linear-gradient(135deg, #4a7c59, #2d5016)';
+                            break;
+                        case 'blue':
+                            button.style.background = 'linear-gradient(135deg, #4169e1, #1e3a8a)';
+                            break;
+                        // 'gold' is default
+                    }
+                }
+
+                // Apply countdown style test
+                const countdownVariant = this.tests.countdown_style.current;
+                const countdown = document.querySelector('.countdown');
+                if (countdown) {
+                    countdown.classList.add(`countdown-${countdownVariant}`);
+                }
+            }
+        }
+
+        // Initialize A/B testing
+        const abTestManager = new ABTestManager();
+
+        // Smart Preloader with Resource Hints
+        class SmartPreloader {
+            constructor() {
+                this.criticalResources = [
+                    'https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800',
+                    'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css'
+                ];
+                this.preloadResources();
+            }
+
+            preloadResources() {
+                this.criticalResources.forEach(url => {
+                    const link = document.createElement('link');
+                    link.rel = 'preload';
+                    link.href = url;
+                    link.as = 'style';
+                    link.crossOrigin = 'anonymous';
+                    document.head.appendChild(link);
+                });
+            }
+
+            prefetchNextPage() {
+                // Prefetch likely next resources
+                const prefetchLinks = [
+                    '/about',
+                    '/services',
+                    '/contact'
+                ];
+
+                prefetchLinks.forEach(url => {
+                    const link = document.createElement('link');
+                    link.rel = 'prefetch';
+                    link.href = url;
+                    document.head.appendChild(link);
+                });
+            }
+        }
+
+        // Initialize smart preloader
+        const smartPreloader = new SmartPreloader();
+
+        // Interactive Background Particles with Agriculture Theme
+        class AgricultureParticles {
+            constructor() {
+                this.canvas = document.createElement('canvas');
+                this.ctx = this.canvas.getContext('2d');
+                this.particles = [];
+                this.init();
+            }
+
+            init() {
+                this.canvas.style.position = 'fixed';
+                this.canvas.style.top = '0';
+                this.canvas.style.left = '0';
+                this.canvas.style.width = '100%';
+                this.canvas.style.height = '100%';
+                this.canvas.style.pointerEvents = 'none';
+                this.canvas.style.zIndex = '-1';
+                this.canvas.style.opacity = '0.3';
+                document.body.appendChild(this.canvas);
+
+                this.resize();
+                this.createParticles();
+                this.animate();
+
+                window.addEventListener('resize', () => this.resize());
+            }
+
+            resize() {
+                this.canvas.width = window.innerWidth;
+                this.canvas.height = window.innerHeight;
+            }
+
+            createParticles() {
+                const particleCount = Math.floor((window.innerWidth * window.innerHeight) / 15000);
+                
+                for (let i = 0; i < particleCount; i++) {
+                    this.particles.push({
+                        x: Math.random() * this.canvas.width,
+                        y: Math.random() * this.canvas.height,
+                        size: Math.random() * 3 + 1,
+                        speedX: (Math.random() - 0.5) * 0.5,
+                        speedY: (Math.random() - 0.5) * 0.5,
+                        opacity: Math.random() * 0.5 + 0.2,
+                        type: Math.random() > 0.5 ? 'leaf' : 'seed'
+                    });
+                }
+            }
+
+            animate() {
+                if (!isReducedMotion) {
+                    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+                    
+                    this.particles.forEach(particle => {
+                        particle.x += particle.speedX;
+                        particle.y += particle.speedY;
+
+                        // Wrap around edges
+                        if (particle.x > this.canvas.width) particle.x = 0;
+                        if (particle.x < 0) particle.x = this.canvas.width;
+                        if (particle.y > this.canvas.height) particle.y = 0;
+                        if (particle.y < 0) particle.y = this.canvas.height;
+
+                        // Draw particle
+                        this.ctx.save();
+                        this.ctx.globalAlpha = particle.opacity;
+                        this.ctx.fillStyle = particle.type === 'leaf' ? '#4a7c59' : '#d4af37';
+                        this.ctx.beginPath();
+                        
+                        if (particle.type === 'leaf') {
+                            // Draw leaf shape
+                            this.ctx.ellipse(particle.x, particle.y, particle.size, particle.size * 0.6, 0, 0, Math.PI * 2);
+                        } else {
+                            // Draw seed shape
+                            this.ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
+                        }
+                        
+                        this.ctx.fill();
+                        this.ctx.restore();
+                    });
+                }
+
+                requestAnimationFrame(() => this.animate());
+            }
+        }
+
+        // Initialize agriculture particles
+        if (!isReducedMotion) {
+            const agricultureParticles = new AgricultureParticles();
+        }
+
+        // Advanced Form Enhancement with Smart Validation
+        function enhanceFormSubmission() {
+            const form = document.getElementById('notifyForm');
+            const emailInput = document.getElementById('emailInput');
+            const btn = document.querySelector('.notify-btn');
+
+            if (!form || !emailInput || !btn) return;
+
+            // Smart email validation with suggestions
+            emailInput.addEventListener('blur', function() {
+                const email = this.value.toLowerCase();
+                const commonDomains = ['gmail.com', 'yahoo.com', 'hotmail.com', 'outlook.com'];
+                
+                // Check for typos in common domains
+                if (email.includes('@')) {
+                    const domain = email.split('@')[1];
+                    const suggestion = commonDomains.find(d => 
+                        this.levenshteinDistance(domain, d) === 1
+                    );
+                    
+                    if (suggestion && domain !== suggestion) {
+                        this.setCustomValidity(`Did you mean @${suggestion}?`);
+                    } else {
+                        this.setCustomValidity('');
+                    }
+                }
+            });
+
+            // Enhanced form submission
+            form.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> <span>Processing...</span>';
+                btn.disabled = true;
+
+                // Simulate API call
+                await new Promise(resolve => setTimeout(resolve, 2000));
+
+                // Success feedback
+                btn.innerHTML = '<i class="fas fa-check"></i> <span>You\'re on the list!</span>';
+                btn.style.background = 'linear-gradient(135deg, #4a7c59, #2d5016)';
+                
+                // Store submission
+                const submissions = JSON.parse(localStorage.getItem('dalston_submissions') || '[]');
+                submissions.push({
+                    email: emailInput.value,
+                    timestamp: new Date().toISOString(),
+                    source: 'coming_soon_page'
+                });
+                localStorage.setItem('dalston_submissions', JSON.stringify(submissions));
+
+                // Reset form after delay
+                setTimeout(() => {
+                    form.reset();
+                    btn.innerHTML = '<i class="fas fa-bell"></i> <span>Notify Me</span>';
+                    btn.style.background = 'linear-gradient(135deg, var(--accent-gold), #f4e28c)';
+                    btn.disabled = false;
+                }, 3000);
+            });
+
+            // Levenshtein distance for typo detection
+            emailInput.levenshteinDistance = function(a, b) {
+                const matrix = Array(b.length + 1).fill().map(() => Array(a.length + 1).fill(0));
+                
+                for (let i = 0; i <= a.length; i++) matrix[0][i] = i;
+                for (let j = 0; j <= b.length; j++) matrix[j][0] = j;
+                
+                for (let j = 1; j <= b.length; j++) {
+                    for (let i = 1; i <= a.length; i++) {
+                        const substitution = matrix[j - 1][i - 1] + (a[i - 1] !== b[j - 1] ? 1 : 0);
+                        matrix[j][i] = Math.min(
+                            matrix[j - 1][i] + 1,
+                            matrix[j][i - 1] + 1,
+                            substitution
+                        );
+                    }
+                }
+                
+                return matrix[b.length][a.length];
+            };
+        }
+
+        // Initialize all enhanced features after DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            initializeEnhancedFeatures();
+        });
     </script>
 </body>
 </html>
