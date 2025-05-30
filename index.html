@@ -701,119 +701,14 @@
             .celebration-overlay {
                 animation: none !important;
                 transition: none !important;
+            }            .celebration-content {
+                animation: none !important;                transform: translate(-50%, -50%) !important;
             }
-            
-            .celebration-content {
-                animation: none !important;
-                transform: translate(-50%, -50%) !important;
-            }
-        }        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
         }
-
-        /* Critical performance optimizations */
-        :root {
-            --primary-green: #2d5016;
-            --secondary-green: #4a7c59;
-            --accent-gold: #d4af37;
-            --earth-brown: #8b4513;
-            --sky-blue: #87ceeb;
-            --warm-white: #faf9f6;
-            --text-dark: #2c3e50;
-            --transition-fast: 0.15s ease;
-            --transition-normal: 0.3s ease;
-            --transition-slow: 0.6s ease;
-        }
-
-        /* Enable hardware acceleration for key elements */
-        *,
-        *::before,
-        *::after {
-            backface-visibility: hidden;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
-
-        body {
-            font-family: 'Poppins', sans-serif;
-            overflow-x: hidden;
-            background: linear-gradient(135deg, var(--primary-green), var(--secondary-green));
-            min-height: 100vh;
-            contain: layout style paint;
-            transform: translateZ(0); /* Force GPU acceleration */
-        }/* Animated Background */
-        .bg-animation {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            background: linear-gradient(135deg, var(--primary-green), var(--secondary-green));
-            transition: background 2s ease-in-out;
-        }
-
-        .floating-elements {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-        }
-
-        .floating-elements::before {
-            content: '';
-            position: absolute;
-            width: 300px;
-            height: 300px;
-            background: rgba(212, 175, 55, 0.1);
-            border-radius: 50%;
-            animation: float 20s infinite ease-in-out;
-            top: 20%;
-            left: 10%;
-        }
-
-        .floating-elements::after {
-            content: '';
-            position: absolute;
-            width: 200px;
-            height: 200px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 50%;
-            animation: float 15s infinite ease-in-out reverse;
-            bottom: 20%;
-            right: 15%;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-30px) rotate(180deg); }
-        }
-
-        /* Main Container */
-        .container {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            position: relative;
-            z-index: 1;
-        }
-
-        /* Header */
-        .header {
-            padding: 2rem 1rem 1rem;
-            text-align: center;
-            position: relative;
-        }
-
-        .logo-container {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 1rem;
-            margin-bottom: 0.5rem;
-        }
+    </style>
+</head>
+<body>    <!-- Loading Overlay -->    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loader-container">
 
         .logo-svg {
             width: 80px;
