@@ -20,6 +20,10 @@
     <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
+      <!-- Preconnect for performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
     
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
@@ -219,10 +223,9 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-        }
-
-        .interactive-card {
+        }        .interactive-card {
             background: rgba(255,255,255,0.1);
+            -webkit-backdrop-filter: blur(20px);
             backdrop-filter: blur(20px);
             border-radius: 20px;
             padding: 2rem;
@@ -338,11 +341,11 @@
         }
 
         /* Contact Info */
-        .contact-info {
-            margin: 1rem;
+        .contact-info {            margin: 1rem;
             padding: 1.5rem;
             background: rgba(0,0,0,0.2);
             border-radius: 15px;
+            -webkit-backdrop-filter: blur(10px);
             backdrop-filter: blur(10px);
         }
 
@@ -470,6 +473,68 @@
             display: block;
         }
 
+        /* Weather Widget */
+        .weather-widget {
+            background: rgba(0,0,0,0.2);
+            border-radius: 15px;
+            padding: 1rem;
+            margin: 1rem 0;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .weather-title {
+            color: var(--accent-gold);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .weather-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            color: var(--warm-white);
+        }
+
+        .weather-icon {
+            font-size: 2rem;
+            color: var(--sky-blue);
+        }
+
+        .weather-info h4 {
+            font-size: 1.2rem;
+            margin-bottom: 0.2rem;
+            font-weight: 600;
+        }
+
+        .weather-info p {
+            font-size: 0.8rem;
+            opacity: 0.8;
+        }
+
+        /* Progressive Enhancement Styles */
+        .enhanced-features {
+            display: none;
+        }
+
+        .enhanced-features.loaded {
+            display: block;
+            animation: slideInUp 0.5s ease-out;
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
         /* Animations */
         @keyframes fadeInUp {
             from {
@@ -484,6 +549,45 @@
 
         .fade-in-up {
             animation: fadeInUp 0.8s ease-out;
+        }
+
+        /* Time-based Dynamic Themes */
+        body.dawn {
+            background: linear-gradient(135deg, #2d5016, #4a7c59, #87ceeb);
+        }
+
+        body.morning {
+            background: linear-gradient(135deg, #2d5016, #4a7c59, #f4e28c);
+        }
+
+        body.noon {
+            background: linear-gradient(135deg, #4a7c59, #2d5016, #d4af37);
+        }
+
+        body.evening {
+            background: linear-gradient(135deg, #8b4513, #2d5016, #d4af37);
+        }        body.night {
+            background: linear-gradient(135deg, #1a1a2e, #2d5016, #16213e);
+        }
+
+        body.dawn .bg-animation {
+            background: linear-gradient(135deg, #2d5016, #4a7c59, #87ceeb);
+        }
+
+        body.morning .bg-animation {
+            background: linear-gradient(135deg, #2d5016, #4a7c59, #f4e28c);
+        }
+
+        body.noon .bg-animation {
+            background: linear-gradient(135deg, #4a7c59, #2d5016, #d4af37);
+        }
+
+        body.evening .bg-animation {
+            background: linear-gradient(135deg, #8b4513, #2d5016, #d4af37);
+        }
+
+        body.night .bg-animation {
+            background: linear-gradient(135deg, #1a1a2e, #2d5016, #16213e);
         }
 
         /* Desktop Responsive */
@@ -664,21 +768,20 @@
                 width: 50px;
                 height: 50px;
             }
-        }
-
-        /* Loading Animation */
+        }        /* Loading Animation */
         .loading-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: var(--primary-green);
+            background: linear-gradient(135deg, var(--primary-green), var(--secondary-green));
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
             z-index: 1000;
-            transition: opacity 0.5s ease;
+            transition: opacity 0.8s ease;
         }
 
         .loading-overlay.hidden {
@@ -686,25 +789,68 @@
             pointer-events: none;
         }
 
-        .loader {
-            width: 60px;
-            height: 60px;
-            border: 4px solid rgba(255,255,255,0.2);
-            border-top: 4px solid var(--accent-gold);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
+        .loader-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2rem;
         }
 
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        .loader {
+            width: 80px;
+            height: 80px;
+            position: relative;
+        }
+
+        .loader::before,
+        .loader::after {
+            content: '';
+            position: absolute;
+            border-radius: 50%;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .loader::before {
+            width: 100%;
+            height: 100%;
+            background: rgba(212, 175, 55, 0.3);
+            animation-delay: 0s;
+        }
+
+        .loader::after {
+            width: 60px;
+            height: 60px;
+            top: 10px;
+            left: 10px;
+            background: var(--accent-gold);
+            animation-delay: 0.5s;
+        }
+
+        .loading-text {
+            color: var(--warm-white);
+            font-size: 1.2rem;
+            font-weight: 300;
+            letter-spacing: 2px;
+            animation: fadeInOut 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.1); opacity: 0.7; }
+        }
+
+        @keyframes fadeInOut {
+            0%, 100% { opacity: 0.7; }
+            50% { opacity: 1; }
         }
     </style>
 </head>
-<body>
-    <!-- Loading Overlay -->
+<body>    <!-- Loading Overlay -->
     <div class="loading-overlay" id="loadingOverlay">
-        <div class="loader"></div>
+        <div class="loader-container">
+            <div class="loader"></div>
+            <div class="loading-text">DALSTON ESTATES</div>
+        </div>
     </div>
 
     <!-- Background Animation -->
@@ -714,7 +860,7 @@
 
     <!-- Vertical Copyright -->
     <div class="vertical-copyright">
-        &copy; 2025 Dalston Estates Pty Ltd. All rights reserved. | Crafted by <a href="https://lvmre.com" target="_blank" class="designer-credit">LVMRE</a>
+        &copy; 2025 Dalston Estates Pty Ltd. All rights reserved. | Crafted by <a href="https://lvmre.com" target="_blank" rel="noopener" class="designer-credit">LVMRE</a>
     </div>
 
     <!-- PWA Install Button -->
@@ -817,6 +963,21 @@
                                     <span class="countdown-number" id="seconds">00</span>
                                     <span class="countdown-label">Seconds</span>
                                 </div>
+                            </div>                        </div>
+
+                        <!-- Weather Widget for Farming Location -->
+                        <div class="weather-widget">
+                            <div class="weather-title">
+                                <i class="fas fa-cloud-sun"></i> Raffingora Weather
+                            </div>
+                            <div class="weather-content">
+                                <div class="weather-icon">
+                                    <i class="fas fa-sun"></i>
+                                </div>
+                                <div class="weather-info">
+                                    <h4>24°C</h4>
+                                    <p>Perfect for Agriculture</p>
+                                </div>
                             </div>
                         </div>
 
@@ -885,36 +1046,57 @@
                 </div>
             </div>
         </section>
-    </div>
-
-    <script>
-        // PWA Installation
+    </div>    <script>
+        // Performance optimization
+        const isReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        
+        // PWA Installation with enhanced UX
         let deferredPrompt;
         const installBtn = document.getElementById('installBtn');
 
         window.addEventListener('beforeinstallprompt', (e) => {
             e.preventDefault();
             deferredPrompt = e;
-            installBtn.classList.add('visible');
+            // Show install button after a delay for better UX
+            setTimeout(() => {
+                installBtn.classList.add('visible');
+            }, 3000);
         });
 
         installBtn.addEventListener('click', async () => {
             if (deferredPrompt) {
+                installBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Installing...';
                 deferredPrompt.prompt();
                 const { outcome } = await deferredPrompt.userChoice;
                 if (outcome === 'accepted') {
-                    installBtn.classList.remove('visible');
+                    installBtn.innerHTML = '<i class="fas fa-check"></i> Installed!';
+                    setTimeout(() => {
+                        installBtn.classList.remove('visible');
+                    }, 2000);
+                } else {
+                    installBtn.innerHTML = '<i class="fas fa-download"></i> Install App';
                 }
                 deferredPrompt = null;
             }
         });
 
-        // Service Worker Registration
+        // Enhanced Service Worker Registration with update handling
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('/sw.js')
                     .then((registration) => {
                         console.log('SW registered: ', registration);
+                        
+                        // Check for updates
+                        registration.addEventListener('updatefound', () => {
+                            const newWorker = registration.installing;
+                            newWorker.addEventListener('statechange', () => {
+                                if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                                    // Show update notification
+                                    showUpdateNotification();
+                                }
+                            });
+                        });
                     })
                     .catch((registrationError) => {
                         console.log('SW registration failed: ', registrationError);
@@ -922,12 +1104,94 @@
             });
         }
 
-        // Loading Animation
-        window.addEventListener('load', function() {
-            setTimeout(() => {
-                document.getElementById('loadingOverlay').classList.add('hidden');
-            }, 1500);
-        });
+        // Update notification function
+        function showUpdateNotification() {
+            const updateBar = document.createElement('div');
+            updateBar.innerHTML = `
+                <div style="position: fixed; top: 0; left: 0; right: 0; background: var(--accent-gold); color: var(--text-dark); padding: 10px; text-align: center; z-index: 1001;">
+                    <span>New version available! </span>
+                    <button onclick="window.location.reload()" style="background: none; border: 1px solid var(--text-dark); padding: 5px 10px; margin-left: 10px; cursor: pointer;">Update</button>
+                </div>
+            `;
+            document.body.appendChild(updateBar);
+        }
+
+        // Enhanced Loading Animation with progress
+        let loadProgress = 0;
+        const loadingInterval = setInterval(() => {
+            loadProgress += Math.random() * 15;
+            if (loadProgress >= 100) {
+                loadProgress = 100;
+                clearInterval(loadingInterval);
+                setTimeout(() => {
+                    document.getElementById('loadingOverlay').classList.add('hidden');
+                    // Add enhanced features after loading
+                    initializeEnhancedFeatures();
+                }, 500);
+            }
+        }, 100);
+
+        // Initialize enhanced features
+        function initializeEnhancedFeatures() {
+            // Dynamic weather updates (simulate)
+            updateWeatherWidget();
+            
+            // Add keyboard navigation
+            addKeyboardNavigation();
+            
+            // Initialize performance monitoring
+            monitorPerformance();
+        }
+
+        // Weather widget with random agriculture-focused updates
+        function updateWeatherWidget() {
+            const weatherConditions = [
+                { temp: '24°C', condition: 'Perfect for Agriculture', icon: 'fas fa-sun' },
+                { temp: '22°C', condition: 'Ideal Growing Weather', icon: 'fas fa-cloud-sun' },
+                { temp: '26°C', condition: 'Great Planting Day', icon: 'fas fa-sun' },
+                { temp: '20°C', condition: 'Cool & Fresh', icon: 'fas fa-cloud' }
+            ];
+            
+            setInterval(() => {
+                const condition = weatherConditions[Math.floor(Math.random() * weatherConditions.length)];
+                const tempElement = document.querySelector('.weather-info h4');
+                const conditionElement = document.querySelector('.weather-info p');
+                const iconElement = document.querySelector('.weather-icon i');
+                
+                if (tempElement && conditionElement && iconElement) {
+                    tempElement.textContent = condition.temp;
+                    conditionElement.textContent = condition.condition;
+                    iconElement.className = condition.icon;
+                }
+            }, 30000); // Update every 30 seconds
+        }
+
+        // Keyboard navigation enhancement
+        function addKeyboardNavigation() {
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' && e.target.classList.contains('social-link')) {
+                    e.target.click();
+                }
+                if (e.key === 'Escape') {
+                    // Close any open modals or notifications
+                    const notifications = document.querySelectorAll('[style*="position: fixed"]');
+                    notifications.forEach(notif => notif.remove());
+                }
+            });
+        }
+
+        // Performance monitoring
+        function monitorPerformance() {
+            if ('PerformanceObserver' in window) {
+                const observer = new PerformanceObserver((list) => {
+                    for (const entry of list.getEntries()) {
+                        if (entry.entryType === 'largest-contentful-paint') {
+                            console.log('LCP:', entry.startTime);
+                        }
+                    }
+                });
+                observer.observe({ entryTypes: ['largest-contentful-paint'] });
+            }        }
 
         // Countdown Timer
         function updateCountdown() {
@@ -1038,6 +1302,86 @@
             }
         `;
         document.head.appendChild(style);
+
+        // Dynamic time-based background enhancement
+        function updateTimeBasedTheme() {
+            const hour = new Date().getHours();
+            const body = document.body;
+            
+            // Remove existing time classes
+            body.classList.remove('dawn', 'morning', 'noon', 'evening', 'night');
+            
+            if (hour >= 5 && hour < 7) {
+                body.classList.add('dawn');
+                updateWeatherForTime('dawn', '18°C', 'Perfect Dawn for Farming');
+            } else if (hour >= 7 && hour < 12) {
+                body.classList.add('morning');
+                updateWeatherForTime('morning', '22°C', 'Ideal Morning Conditions');
+            } else if (hour >= 12 && hour < 17) {
+                body.classList.add('noon');
+                updateWeatherForTime('noon', '26°C', 'Prime Growing Hours');
+            } else if (hour >= 17 && hour < 20) {
+                body.classList.add('evening');
+                updateWeatherForTime('evening', '24°C', 'Perfect Evening Weather');
+            } else {
+                body.classList.add('night');
+                updateWeatherForTime('night', '20°C', 'Cool Night Air');
+            }
+        }
+
+        function updateWeatherForTime(timeOfDay, temp, condition) {
+            const tempElement = document.querySelector('.weather-info h4');
+            const conditionElement = document.querySelector('.weather-info p');
+            const iconElement = document.querySelector('.weather-icon i');
+            
+            if (tempElement && conditionElement && iconElement) {
+                tempElement.textContent = temp;
+                conditionElement.textContent = condition;
+                
+                const icons = {
+                    dawn: 'fas fa-cloud-sun',
+                    morning: 'fas fa-sun',
+                    noon: 'fas fa-sun',
+                    evening: 'fas fa-cloud-sun',
+                    night: 'fas fa-moon'
+                };
+                
+                iconElement.className = icons[timeOfDay] || 'fas fa-sun';
+            }
+        }
+
+        // Enhanced form submission with local storage
+        function enhanceFormSubmission() {
+            const form = document.getElementById('notifyForm');
+            
+            // Load saved data
+            const savedData = localStorage.getItem('dalstonFormData');
+            if (savedData) {
+                const data = JSON.parse(savedData);
+                document.getElementById('name').value = data.name || '';
+                document.getElementById('email').value = data.email || '';
+                document.getElementById('phone').value = data.phone || '';
+            }
+            
+            // Save data on input
+            form.addEventListener('input', (e) => {
+                const formData = {
+                    name: document.getElementById('name').value,
+                    email: document.getElementById('email').value,
+                    phone: document.getElementById('phone').value
+                };
+                localStorage.setItem('dalstonFormData', JSON.stringify(formData));
+            });
+        }
+
+        // Initialize form enhancement
+        enhanceFormSubmission();
+
+        // Initial theme update
+        updateTimeBasedTheme();
+
+        // Update theme every hour
+        setInterval(updateTimeBasedTheme, 3600000);
     </script>
 </body>
 </html>
