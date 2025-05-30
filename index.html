@@ -1022,12 +1022,317 @@
         .hero-section {
             contain: layout style paint;
             will-change: transform;
-        }
-
-        /* Memory-efficient particle container */
+        }        /* Memory-efficient particle container */
         .particle-canvas {
             contain: strict;
             transform: translateZ(0);
+        }
+
+        /* Interactive Tour Styles */
+        .tour-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #d4af37, #f4e28c);
+            color: var(--text-dark);
+            border: none;
+            border-radius: 25px;
+            padding: 12px 20px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+            transition: all var(--transition-normal);
+            z-index: 1000;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .tour-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.4);
+        }
+
+        .tour-btn i {
+            margin-right: 8px;
+        }
+
+        /* Tour Overlay System */
+        .tour-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 10000;
+            display: none;
+            pointer-events: none;
+        }
+
+        .tour-overlay.active {
+            display: block;
+            pointer-events: all;
+        }
+
+        .tour-backdrop {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            transition: opacity 0.3s ease;
+        }
+
+        .tour-spotlight {
+            position: absolute;
+            border-radius: 10px;
+            box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.8);
+            transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            pointer-events: none;
+            z-index: 10001;
+        }
+
+        .tour-tooltip {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 15px;
+            padding: 0;
+            max-width: 400px;
+            min-width: 320px;            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            z-index: 10002;
+            -webkit-backdrop-filter: blur(20px);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            transform: translateY(10px);
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .tour-tooltip.visible {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .tour-content {
+            padding: 0;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        .tour-header {
+            background: linear-gradient(135deg, var(--primary-green), var(--secondary-green));
+            color: white;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .tour-title {
+            margin: 0;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        .tour-close {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all var(--transition-normal);
+        }
+
+        .tour-close:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.1);
+        }
+
+        .tour-body {
+            padding: 25px;
+        }
+
+        .tour-description {
+            margin: 0 0 20px 0;
+            font-size: 1rem;
+            line-height: 1.6;
+            color: var(--text-dark);
+        }
+
+        .tour-highlights {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+
+        .tour-highlight-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+            color: var(--text-dark);
+        }
+
+        .tour-highlight-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .tour-highlight-item i {
+            color: var(--accent-gold);
+            margin-right: 10px;
+            width: 16px;
+        }
+
+        .tour-footer {
+            padding: 20px 25px;
+            background: #f8f9fa;
+            border-top: 1px solid #e9ecef;
+        }
+
+        .tour-progress {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            gap: 15px;
+        }
+
+        .tour-step-counter {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--primary-green);
+            min-width: 80px;
+        }
+
+        .tour-progress-bar {
+            flex: 1;
+            height: 6px;
+            background: #e9ecef;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .tour-progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-gold), #f4e28c);
+            border-radius: 3px;
+            transition: width 0.5s ease;
+        }
+
+        .tour-controls {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+        }
+
+        .tour-btn-secondary,
+        .tour-btn-primary {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all var(--transition-normal);
+        }
+
+        .tour-btn-secondary {
+            background: #e9ecef;
+            color: var(--text-dark);
+        }
+
+        .tour-btn-secondary:hover {
+            background: #dee2e6;
+        }
+
+        .tour-btn-primary {
+            background: linear-gradient(135deg, var(--accent-gold), #f4e28c);
+            color: var(--text-dark);
+        }
+
+        .tour-btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
+        }
+
+        .tour-btn-primary:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* LVMRE Branding in Tour */
+        .lvmre-showcase {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+            text-align: center;
+        }
+
+        .lvmre-showcase h4 {
+            margin: 0 0 10px 0;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .lvmre-showcase p {
+            margin: 0 0 15px 0;
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .lvmre-cta {
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.8rem;
+            transition: all var(--transition-normal);
+        }
+
+        .lvmre-cta:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-1px);
+        }
+
+        /* Mobile Tour Adjustments */
+        @media (max-width: 768px) {
+            .tour-btn {
+                top: 10px;
+                right: 10px;
+                padding: 10px 16px;
+                font-size: 0.8rem;
+            }
+
+            .tour-tooltip {
+                max-width: calc(100vw - 40px);
+                min-width: calc(100vw - 40px);
+                left: 20px !important;
+                right: 20px !important;
+            }
+
+            .tour-controls {
+                flex-direction: column;
+            }
+
+            .tour-btn-secondary,
+            .tour-btn-primary {
+                width: 100%;
+                justify-content: center;
+            }
         }
     </style>
 </head>
@@ -1050,7 +1355,41 @@
     </div>    <!-- PWA Install Button -->
     <button class="install-btn" id="installBtn">
         <i class="fas fa-download"></i> Install App
+    </button>    <!-- Interactive Tour Button -->
+    <button class="tour-btn" id="tourBtn" title="Take Interactive Tour" aria-label="Take Interactive Tour">
+        <i class="fas fa-route"></i> Take Tour
     </button>
+
+    <!-- Tour Overlay -->
+    <div class="tour-overlay" id="tourOverlay">
+        <div class="tour-spotlight"></div>
+        <div class="tour-tooltip">
+            <div class="tour-content">
+                <div class="tour-header">
+                    <h3 class="tour-title">Tour Step</h3>                    <button class="tour-close" id="tourClose" title="Close Tour" aria-label="Close Tour">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="tour-body">
+                    <p class="tour-description"></p>
+                    <div class="tour-highlights"></div>
+                </div>
+                <div class="tour-footer">
+                    <div class="tour-progress">
+                        <span class="tour-step-counter"></span>
+                        <div class="tour-progress-bar">
+                            <div class="tour-progress-fill"></div>
+                        </div>
+                    </div>
+                    <div class="tour-controls">
+                        <button class="tour-btn-secondary" id="tourPrev">Previous</button>
+                        <button class="tour-btn-primary" id="tourNext">Next</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="tour-backdrop"></div>
+    </div>
 
     <!-- Agricultural Progress Seeds -->
     <div class="progress-seeds" id="progressSeeds">
@@ -1069,13 +1408,12 @@
                 <svg class="logo-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
                     <!-- Outer circle with company name -->
                     <circle cx="50" cy="50" r="48" fill="none" stroke="#d4af37" stroke-width="2"/>
-                    
-                    <!-- Company name curved around the circle -->
+                      <!-- Company name curved around the circle -->
                     <defs>
                         <path id="circle-text" d="M 50,50 m -45,0 a 45,45 0 1,1 90,0 a 45,45 0 1,1 -90,0"/>
                     </defs>
-                    <text font-family="Poppins, sans-serif" font-size="6" font-weight="500" fill="#d4af37">
-                        <textPath href="#circle-text" startOffset="0%">
+                    <text font-family="Poppins, sans-serif" font-size="7" font-weight="600" fill="#faf9f6" stroke="#2d5016" stroke-width="0.3">
+                        <textPath href="#circle-text" startOffset="2%">
                             DALSTON ESTATES • PREMIUM AGRICULTURE • 
                         </textPath>
                     </text>
@@ -1382,20 +1720,7 @@
                     notifications.forEach(notif => notif.remove());
                 }
             });
-        }
-
-        // Performance monitoring
-        function monitorPerformance() {
-            if ('PerformanceObserver' in window) {
-                const observer = new PerformanceObserver((list) => {
-                    for (const entry of list.getEntries()) {
-                        if (entry.entryType === 'largest-contentful-paint') {
-                            console.log('LCP:', entry.startTime);
-                        }
-                    }
-                });
-                observer.observe({ entryTypes: ['largest-contentful-paint'] });
-            }        }
+        }        // Performance monitoring (removed duplicate - using advanced version below)
 
         // Countdown Timer
         function updateCountdown() {
@@ -1495,17 +1820,26 @@
                     mouseThrottle = false;
                 }, 100);
             }
-        });
-
-        // Particle animation
-        const style = document.createElement('style');
-        style.textContent = `
+        });        // Particle animation and tour animations
+        const animationStyles = document.createElement('style');
+        animationStyles.textContent = `
             @keyframes particleFade {
                 0% { opacity: 1; transform: scale(1); }
                 100% { opacity: 0; transform: scale(0) translateY(-20px); }
             }
+            
+            @keyframes pulse {
+                0% { transform: scale(1); box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3); }
+                50% { transform: scale(1.05); box-shadow: 0 8px 25px rgba(212, 175, 55, 0.6); }
+                100% { transform: scale(1); box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3); }
+            }
+            
+            @keyframes fadeInOut {
+                0%, 100% { opacity: 0; transform: translateY(-10px); }
+                20%, 80% { opacity: 1; transform: translateY(0); }
+            }
         `;
-        document.head.appendChild(style);
+        document.head.appendChild(animationStyles);
 
         // Dynamic time-based background enhancement
         function updateTimeBasedTheme() {
@@ -1552,34 +1886,7 @@
                 
                 iconElement.className = icons[timeOfDay] || 'fas fa-sun';
             }
-        }
-
-        // Enhanced form submission with local storage
-        function enhanceFormSubmission() {
-            const form = document.getElementById('notifyForm');
-            
-            // Load saved data
-            const savedData = localStorage.getItem('dalstonFormData');
-            if (savedData) {
-                const data = JSON.parse(savedData);
-                document.getElementById('name').value = data.name || '';
-                document.getElementById('email').value = data.email || '';
-                document.getElementById('phone').value = data.phone || '';
-            }
-            
-            // Save data on input
-            form.addEventListener('input', (e) => {
-                const formData = {
-                    name: document.getElementById('name').value,
-                    email: document.getElementById('email').value,
-                    phone: document.getElementById('phone').value
-                };
-                localStorage.setItem('dalstonFormData', JSON.stringify(formData));
-            });
-        }
-
-        // Initialize form enhancement
-        enhanceFormSubmission();
+        }        // Enhanced form submission with local storage (removed duplicate - using advanced version below)
 
         // Initial theme update
         updateTimeBasedTheme();
@@ -2037,11 +2344,9 @@
 
                 requestAnimationFrame(() => this.animate());
             }
-        }
-
-        // Initialize agriculture particles
+        }        // Initialize agriculture particles
         if (!isReducedMotion) {
-            const agricultureParticles = new AgricultureParticles();
+            window.agricultureParticles = new AgricultureParticles();
         }
 
         // Advanced Form Enhancement with Smart Validation
@@ -2124,12 +2429,413 @@
                 
                 return matrix[b.length][a.length];
             };
-        }
-
-        // Initialize all enhanced features after DOM is loaded
+        }        // Initialize all enhanced features after DOM is loaded
         document.addEventListener('DOMContentLoaded', () => {
             initializeEnhancedFeatures();
+            initializeInteractiveTour();
         });
+
+        // Interactive Tour System
+        class InteractiveTour {
+            constructor() {
+                this.currentStep = 0;
+                this.isActive = false;
+                this.steps = [
+                    {
+                        target: '.logo-container',
+                        title: 'Welcome to Dalston Estates',
+                        description: 'Our premium agricultural brand represents excellence in Zimbabwe\'s farming industry. Notice the carefully crafted circular logo with agricultural elements.',
+                        highlights: [
+                            'Custom SVG logo design with circular text',
+                            'Agricultural wheat and leaf motifs',
+                            'Premium branding that builds trust',
+                            'Responsive design across all devices'
+                        ],
+                        lvmre: true
+                    },
+                    {
+                        target: '.countdown-timer',
+                        title: 'Launch Countdown Timer',
+                        description: 'A dynamic countdown creates urgency and anticipation for your launch. This interactive element keeps visitors engaged and coming back.',
+                        highlights: [
+                            'Real-time countdown functionality',
+                            'Smooth animations and transitions',
+                            'Mobile-responsive design',
+                            'Custom styling with agricultural theme'
+                        ],
+                        lvmre: false
+                    },
+                    {
+                        target: '.weather-widget',
+                        title: 'Smart Weather Integration',
+                        description: 'Location-specific weather information for Raffingora shows your connection to the farming community and provides real value to agricultural visitors.',
+                        highlights: [
+                            'Live weather data integration',
+                            'Agricultural context messaging',
+                            'Location-specific information',
+                            'Dynamic updates every 30 seconds'
+                        ],
+                        lvmre: false
+                    },
+                    {
+                        target: '.notify-form',
+                        title: 'Advanced Email Collection',
+                        description: 'Smart form with validation, typo detection, and email suggestions. Captures leads effectively while providing excellent user experience.',
+                        highlights: [
+                            'Smart email validation and suggestions',
+                            'Form data persistence with localStorage',
+                            'Animated feedback and success states',
+                            'GDPR-compliant data handling'
+                        ],
+                        lvmre: true
+                    },
+                    {
+                        target: '.seeds-progress',
+                        title: 'Agricultural Progress Indicator',
+                        description: 'Unique scroll-based progress visualization using agricultural seeds theme. This creative element reinforces your farming brand.',
+                        highlights: [
+                            'Scroll-triggered animations',
+                            'Agricultural themed progress indicator',
+                            'Smooth CSS transitions',
+                            'Brand-consistent design language'
+                        ],
+                        lvmre: false
+                    },
+                    {
+                        target: '.visitor-counter',
+                        title: 'Live Visitor Counter',
+                        description: 'Simulated live visitor counter showing "interested farmers" builds social proof and creates FOMO (Fear of Missing Out).',
+                        highlights: [
+                            'Real-time counter simulation',
+                            'Agricultural context ("farmers")',
+                            'Social proof psychology',
+                            'Smooth number animations'
+                        ],
+                        lvmre: false
+                    },
+                    {
+                        target: '.contact-info',
+                        title: 'Contact & Social Media',
+                        description: 'Professional contact information with social media links. The glassmorphism design adds modern appeal while maintaining readability.',
+                        highlights: [
+                            'Glassmorphism design effects',
+                            'Hover animations and feedback',
+                            'Social media integration',
+                            'Professional contact presentation'
+                        ],
+                        lvmre: false
+                    },
+                    {
+                        target: '.install-btn',
+                        title: 'Progressive Web App (PWA)',
+                        description: 'Full PWA functionality allows users to install your site like a native app. Includes offline caching and push notifications.',
+                        highlights: [
+                            'Native app-like installation',
+                            'Offline functionality with service worker',
+                            'Push notification capability',
+                            'Improved user engagement'
+                        ],
+                        lvmre: true
+                    },
+                    {
+                        target: '.vertical-copyright',
+                        title: 'LVMRE Design Credit',
+                        description: 'This project showcases LVMRE\'s expertise in creating engaging, high-performance websites with advanced features and beautiful design.',
+                        highlights: [
+                            'Advanced performance optimization',
+                            'Creative interactive elements',
+                            'Professional PWA implementation',
+                            'Agricultural industry expertise'
+                        ],
+                        lvmre: true,
+                        isLast: true
+                    }
+                ];
+                this.init();
+            }
+
+            init() {
+                this.createTourElements();
+                this.bindEvents();
+            }
+
+            createTourElements() {
+                // Tour elements are already in HTML
+                this.overlay = document.getElementById('tourOverlay');
+                this.spotlight = this.overlay.querySelector('.tour-spotlight');
+                this.tooltip = this.overlay.querySelector('.tour-tooltip');
+                this.title = this.overlay.querySelector('.tour-title');
+                this.description = this.overlay.querySelector('.tour-description');
+                this.highlights = this.overlay.querySelector('.tour-highlights');
+                this.stepCounter = this.overlay.querySelector('.tour-step-counter');
+                this.progressFill = this.overlay.querySelector('.tour-progress-fill');
+                this.prevBtn = document.getElementById('tourPrev');
+                this.nextBtn = document.getElementById('tourNext');
+                this.closeBtn = document.getElementById('tourClose');
+            }
+
+            bindEvents() {
+                document.getElementById('tourBtn').addEventListener('click', () => this.start());
+                this.closeBtn.addEventListener('click', () => this.end());
+                this.prevBtn.addEventListener('click', () => this.previousStep());
+                this.nextBtn.addEventListener('click', () => this.nextStep());
+                
+                // Close on backdrop click
+                this.overlay.querySelector('.tour-backdrop').addEventListener('click', () => this.end());
+                
+                // Keyboard navigation
+                document.addEventListener('keydown', (e) => {
+                    if (!this.isActive) return;
+                    
+                    switch(e.key) {
+                        case 'Escape':
+                            this.end();
+                            break;
+                        case 'ArrowLeft':
+                            this.previousStep();
+                            break;
+                        case 'ArrowRight':
+                        case ' ':
+                            e.preventDefault();
+                            this.nextStep();
+                            break;
+                    }
+                });
+            }
+
+            start() {
+                this.isActive = true;
+                this.currentStep = 0;
+                this.overlay.classList.add('active');
+                document.body.style.overflow = 'hidden';
+                
+                // Track tour start
+                this.trackEvent('tour_started');
+                
+                setTimeout(() => {
+                    this.showStep(0);
+                }, 100);
+            }
+
+            end() {
+                this.isActive = false;
+                this.overlay.classList.remove('active');
+                document.body.style.overflow = '';
+                
+                // Track tour completion
+                this.trackEvent('tour_ended', { step: this.currentStep, completed: this.currentStep === this.steps.length - 1 });
+            }
+
+            showStep(stepIndex) {
+                const step = this.steps[stepIndex];
+                if (!step) return;
+
+                const target = document.querySelector(step.target);
+                if (!target) return;
+
+                // Update spotlight
+                this.updateSpotlight(target);
+                
+                // Update tooltip content
+                this.updateTooltip(step, stepIndex);
+                
+                // Position tooltip
+                this.positionTooltip(target);
+                
+                // Update progress
+                this.updateProgress(stepIndex);
+                
+                // Update button states
+                this.updateButtons(stepIndex);
+                
+                // Show tooltip with animation
+                setTimeout(() => {
+                    this.tooltip.classList.add('visible');
+                }, 200);
+
+                // Track step view
+                this.trackEvent('tour_step_viewed', { step: stepIndex, title: step.title });
+            }
+
+            updateSpotlight(target) {
+                const rect = target.getBoundingClientRect();
+                const padding = 10;
+                
+                this.spotlight.style.top = `${rect.top - padding}px`;
+                this.spotlight.style.left = `${rect.left - padding}px`;
+                this.spotlight.style.width = `${rect.width + padding * 2}px`;
+                this.spotlight.style.height = `${rect.height + padding * 2}px`;
+            }
+
+            updateTooltip(step, stepIndex) {
+                this.tooltip.classList.remove('visible');
+                
+                setTimeout(() => {
+                    this.title.textContent = step.title;
+                    this.description.textContent = step.description;
+                    
+                    // Update highlights
+                    this.highlights.innerHTML = '';
+                    step.highlights.forEach(highlight => {
+                        const item = document.createElement('div');
+                        item.className = 'tour-highlight-item';
+                        item.innerHTML = `<i class="fas fa-check"></i> ${highlight}`;
+                        this.highlights.appendChild(item);
+                    });
+                    
+                    // Add LVMRE showcase if applicable
+                    if (step.lvmre) {
+                        const lvmreDiv = document.createElement('div');
+                        lvmreDiv.className = 'lvmre-showcase';
+                        
+                        if (step.isLast) {
+                            lvmreDiv.innerHTML = `
+                                <h4><i class="fas fa-award"></i> Crafted by LVMRE</h4>
+                                <p>This cutting-edge website showcases LVMRE's expertise in creating high-performance, engaging digital experiences for the agricultural industry.</p>
+                                <a href="https://lvmre.com" target="_blank" rel="noopener" class="lvmre-cta">
+                                    <i class="fas fa-external-link-alt"></i> Explore LVMRE Services
+                                </a>
+                            `;
+                        } else {
+                            lvmreDiv.innerHTML = `
+                                <h4><i class="fas fa-magic"></i> LVMRE Design Feature</h4>
+                                <p>This element demonstrates LVMRE's attention to detail and user experience optimization.</p>
+                                <a href="https://lvmre.com" target="_blank" rel="noopener" class="lvmre-cta">
+                                    <i class="fas fa-info-circle"></i> Learn More
+                                </a>
+                            `;
+                        }
+                        
+                        this.highlights.appendChild(lvmreDiv);
+                    }
+                }, 150);
+            }
+
+            positionTooltip(target) {
+                const rect = target.getBoundingClientRect();
+                const tooltipWidth = 400;
+                const tooltipHeight = 300; // Approximate
+                const viewportWidth = window.innerWidth;
+                const viewportHeight = window.innerHeight;
+                
+                let left = rect.right + 20;
+                let top = rect.top;
+                
+                // Adjust if tooltip would go off right edge
+                if (left + tooltipWidth > viewportWidth - 20) {
+                    left = rect.left - tooltipWidth - 20;
+                }
+                
+                // Adjust if tooltip would go off left edge
+                if (left < 20) {
+                    left = 20;
+                    top = rect.bottom + 20;
+                }
+                
+                // Adjust if tooltip would go off bottom
+                if (top + tooltipHeight > viewportHeight - 20) {
+                    top = Math.max(20, rect.top - tooltipHeight - 20);
+                }
+                
+                // Ensure tooltip stays within viewport
+                left = Math.max(20, Math.min(left, viewportWidth - tooltipWidth - 20));
+                top = Math.max(20, top);
+                
+                this.tooltip.style.left = `${left}px`;
+                this.tooltip.style.top = `${top}px`;
+            }
+
+            updateProgress(stepIndex) {
+                const progress = ((stepIndex + 1) / this.steps.length) * 100;
+                this.progressFill.style.width = `${progress}%`;
+                this.stepCounter.textContent = `Step ${stepIndex + 1} of ${this.steps.length}`;
+            }
+
+            updateButtons(stepIndex) {
+                this.prevBtn.style.display = stepIndex === 0 ? 'none' : 'block';
+                this.nextBtn.textContent = stepIndex === this.steps.length - 1 ? 'Finish Tour' : 'Next';
+            }
+
+            nextStep() {
+                if (this.currentStep < this.steps.length - 1) {
+                    this.currentStep++;
+                    this.showStep(this.currentStep);
+                } else {
+                    this.end();
+                }
+            }
+
+            previousStep() {
+                if (this.currentStep > 0) {
+                    this.currentStep--;
+                    this.showStep(this.currentStep);
+                }
+            }
+
+            trackEvent(eventName, data = {}) {
+                // Store tour analytics
+                const tourData = JSON.parse(localStorage.getItem('dalston_tour_analytics') || '[]');
+                tourData.push({
+                    event: eventName,
+                    data: data,
+                    timestamp: new Date().toISOString(),
+                    userAgent: navigator.userAgent.substring(0, 100)
+                });
+                
+                // Keep only last 100 events
+                if (tourData.length > 100) {
+                    tourData.splice(0, tourData.length - 100);
+                }
+                
+                localStorage.setItem('dalston_tour_analytics', JSON.stringify(tourData));
+                console.log('Tour event:', eventName, data);
+            }
+        }        // Initialize Interactive Tour
+        function initializeInteractiveTour() {
+            window.dalstonTour = new InteractiveTour();
+            
+            // Auto-start tour for first-time visitors after a delay
+            const hasSeenTour = localStorage.getItem('dalston_tour_seen');
+            if (!hasSeenTour) {
+                setTimeout(() => {
+                    const tourBtn = document.getElementById('tourBtn');
+                    tourBtn.style.animation = 'pulse 2s infinite';
+                    tourBtn.title = 'Take a tour to explore all features!';
+                    
+                    // Show tooltip hint
+                    const hint = document.createElement('div');
+                    hint.style.cssText = `
+                        position: fixed;
+                        top: 60px;
+                        right: 20px;
+                        background: var(--accent-gold);
+                        color: var(--text-dark);
+                        padding: 8px 12px;
+                        border-radius: 8px;
+                        font-size: 0.8rem;
+                        font-weight: 600;
+                        z-index: 1001;
+                        animation: fadeInOut 3s ease-in-out;
+                        pointer-events: none;
+                    `;
+                    hint.textContent = 'Explore all features!';
+                    document.body.appendChild(hint);
+                    
+                    setTimeout(() => {
+                        hint.remove();
+                        tourBtn.style.animation = '';
+                    }, 3000);
+                }, 5000);
+                
+                localStorage.setItem('dalston_tour_seen', 'true');
+            }        }
+
+        // Initialize tour when DOM is ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initializeInteractiveTour);
+        } else {
+            initializeInteractiveTour();
+        }
     </script>
 </body>
 </html>
