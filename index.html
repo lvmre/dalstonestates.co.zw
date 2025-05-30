@@ -53,9 +53,7 @@
             overflow-x: hidden;
             background: linear-gradient(135deg, var(--primary-green), var(--secondary-green));
             min-height: 100vh;
-        }
-
-        /* Animated Background */
+        }        /* Animated Background */
         .bg-animation {
             position: fixed;
             top: 0;
@@ -64,6 +62,7 @@
             height: 100%;
             z-index: -1;
             background: linear-gradient(135deg, var(--primary-green), var(--secondary-green));
+            transition: background 2s ease-in-out;
         }
 
         .floating-elements {
@@ -1129,12 +1128,17 @@
                     initializeEnhancedFeatures();
                 }, 500);
             }
-        }, 100);
-
-        // Initialize enhanced features
+        }, 100);        // Initialize enhanced features
         function initializeEnhancedFeatures() {
             // Dynamic weather updates (simulate)
             updateWeatherWidget();
+            
+            // Time-based theme
+            updateTimeBasedTheme();
+            setInterval(updateTimeBasedTheme, 60000); // Update every minute
+            
+            // Enhanced form functionality
+            enhanceFormSubmission();
             
             // Add keyboard navigation
             addKeyboardNavigation();
