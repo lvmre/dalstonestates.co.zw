@@ -1,0 +1,45 @@
+<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+    <!-- Background circle for better visibility as icon -->
+    <circle cx="50" cy="50" r="50" fill="#2d5016"/>
+    
+    <!-- Outer circle with company name -->
+    <circle cx="50" cy="50" r="45" fill="none" stroke="#d4af37" stroke-width="2"/>
+    
+    <!-- Company name curved around the circle -->
+    <defs>
+        <path id="circle-text" d="M 50,50 m -42,0 a 42,42 0 1,1 84,0 a 42,42 0 1,1 -84,0"/>
+    </defs>
+    <text font-family="Poppins, sans-serif" font-size="6" font-weight="600" fill="#faf9f6" stroke="#2d5016" stroke-width="0.2">
+        <textPath href="#circle-text" startOffset="2%">
+            DALSTON ESTATES • PREMIUM AGRICULTURE • 
+        </textPath>
+    </text>
+    
+    <!-- Inner background circle for acronym -->
+    <circle cx="50" cy="50" r="32" fill="#2d5016" stroke="#d4af37" stroke-width="1"/>
+    
+    <!-- Agricultural elements around the acronym -->
+    <!-- Wheat stalks -->
+    <g stroke="#4a7c59" stroke-width="1.2" fill="none">
+        <path d="M37,37 Q35,32 37,27 Q39,32 37,37"/>
+        <path d="M63,37 Q61,32 63,27 Q65,32 63,37"/>
+        <path d="M37,63 Q35,68 37,73 Q39,68 37,73"/>
+        <path d="M63,63 Q61,68 63,73 Q65,68 63,73"/>
+    </g>
+    
+    <!-- Small decorative leaves -->
+    <g fill="#4a7c59">
+        <ellipse cx="32" cy="50" rx="2.5" ry="1.2" transform="rotate(45 32 50)"/>
+        <ellipse cx="68" cy="50" rx="2.5" ry="1.2" transform="rotate(-45 68 50)"/>
+        <ellipse cx="50" cy="32" rx="1.2" ry="2.5" transform="rotate(0 50 32)"/>
+        <ellipse cx="50" cy="68" rx="1.2" ry="2.5" transform="rotate(0 50 68)"/>
+    </g>
+    
+    <!-- Company Acronym - Main Logo -->
+    <text x="50" y="58" text-anchor="middle" font-family="Playfair Display, serif" 
+          font-size="20" font-weight="bold" fill="#d4af37">DE</text>
+    
+    <!-- Small agricultural subtitle -->
+    <text x="50" y="66" text-anchor="middle" font-family="Poppins, sans-serif" 
+          font-size="2.5" font-weight="400" fill="#faf9f6">EST. 2025</text>
+</svg>
