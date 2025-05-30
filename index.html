@@ -12,32 +12,42 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Dalston Estates">
     <meta name="msapplication-TileColor" content="#2d5016">
-    
-    <!-- PWA Manifest -->
+      <!-- PWA Manifest -->
     <link rel="manifest" href="manifest.json">
     
     <!-- Favicons -->
     <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
-      <!-- Preconnect for performance -->
+    
+    <!-- DNS Prefetch for external resources -->
+    <link rel="dns-prefetch" href="//fonts.googleapis.com">
+    <link rel="dns-prefetch" href="//fonts.gstatic.com">
+    <link rel="dns-prefetch" href="//cdnjs.cloudflare.com">
+    <link rel="dns-prefetch" href="//api.openweathermap.org">
+    
+    <!-- Preconnect for performance -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
     
-    <!-- Fonts -->
+    <!-- Resource hints for faster loading -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;600;700&display=swap"></noscript>
+    
+    <!-- Fonts (fallback) -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
     
     <!-- Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
-    <style>
-        * {
+    <style>        * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
+        /* Critical performance optimizations */
         :root {
             --primary-green: #2d5016;
             --secondary-green: #4a7c59;
@@ -46,6 +56,18 @@
             --sky-blue: #87ceeb;
             --warm-white: #faf9f6;
             --text-dark: #2c3e50;
+            --transition-fast: 0.15s ease;
+            --transition-normal: 0.3s ease;
+            --transition-slow: 0.6s ease;
+        }
+
+        /* Enable hardware acceleration for key elements */
+        *,
+        *::before,
+        *::after {
+            backface-visibility: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
         body {
@@ -53,7 +75,9 @@
             overflow-x: hidden;
             background: linear-gradient(135deg, var(--primary-green), var(--secondary-green));
             min-height: 100vh;
-        }        /* Animated Background */
+            contain: layout style paint;
+            transform: translateZ(0); /* Force GPU acceleration */
+        }/* Animated Background */
         .bg-animation {
             position: fixed;
             top: 0;
@@ -318,9 +342,7 @@
 
         .form-input::placeholder {
             color: rgba(255,255,255,0.6);
-        }
-
-        .notify-btn {
+        }        .notify-btn {
             width: 100%;
             padding: 0.8rem;
             background: linear-gradient(135deg, var(--accent-gold), #f4e28c);
@@ -330,10 +352,13 @@
             font-size: 1rem;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all var(--transition-normal);
             text-transform: uppercase;
             letter-spacing: 1px;
             font-family: 'Poppins', sans-serif;
+            position: relative;
+            overflow: hidden;
+            will-change: transform;
         }
 
         .notify-btn:hover {
@@ -907,6 +932,7 @@
         .notify-btn {
             position: relative;
             overflow: hidden;
+            will-change: transform;
         }
 
         .notify-btn::after {
