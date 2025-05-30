@@ -903,9 +903,7 @@
             0% { transform: scale(1); }
             50% { transform: scale(1.1); }
             100% { transform: scale(1); }
-        }
-
-        /* Enhanced Button Styles */
+        }        /* Enhanced Button Effects */
         .notify-btn {
             position: relative;
             overflow: hidden;
@@ -1246,6 +1244,9 @@
             
             // Initialize progress seeds animation
             initializeProgressSeeds();
+            
+            // Initialize visitor counter
+            initializeVisitorCounter();
         }
 
         // Weather widget with random agriculture-focused updates
@@ -1608,6 +1609,57 @@
 
         // Initialize email validation enhancement
         enhanceEmailValidation();
+
+        // Live visitor counter simulation
+        function initializeVisitorCounter() {
+            const baseVisitors = 2847; // Starting number
+            let currentVisitors = baseVisitors + Math.floor(Math.random() * 100);
+            
+            // Create visitor counter display
+            const visitorCounter = document.createElement('div');
+            visitorCounter.style.cssText = `
+                position: fixed;
+                top: 20px;
+                left: 20px;
+                background: rgba(0,0,0,0.7);
+                color: var(--accent-gold);
+                padding: 8px 12px;
+                border-radius: 20px;
+                font-size: 0.8rem;
+                font-weight: 500;
+                z-index: 100;
+                opacity: 0;
+                transition: opacity 0.5s ease;
+                border: 1px solid rgba(212, 175, 55, 0.3);
+            `;
+            
+            visitorCounter.innerHTML = `
+                <i class="fas fa-users"></i> 
+                <span id="visitorCount">${currentVisitors.toLocaleString()}</span> 
+                interested farmers
+            `;
+            
+            document.body.appendChild(visitorCounter);
+            
+            // Show after delay
+            setTimeout(() => {
+                visitorCounter.style.opacity = '1';
+            }, 2000);
+            
+            // Simulate live updates
+            setInterval(() => {
+                if (Math.random() < 0.3) { // 30% chance of update
+                    currentVisitors += Math.floor(Math.random() * 3) + 1;
+                    document.getElementById('visitorCount').textContent = currentVisitors.toLocaleString();
+                    
+                    // Add pulse effect
+                    visitorCounter.style.transform = 'scale(1.05)';
+                    setTimeout(() => {
+                        visitorCounter.style.transform = 'scale(1)';
+                    }, 200);
+                }
+            }, 8000); // Update every 8 seconds
+        }
     </script>
 </body>
 </html>
