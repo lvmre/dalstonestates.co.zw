@@ -6,6 +6,21 @@
     <title>Dalston Estates - Coming Soon | Premium Agriculture & Commercial Farming</title>
     <meta name="description" content="Dalston Estates Pty Ltd - Leading commercial farming and agriculture in Zimbabwe. Coming Soon - Revolutionary farming solutions in Raffingora, Mashonaland West.">
     
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#2d5016">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Dalston Estates">
+    <meta name="msapplication-TileColor" content="#2d5016">
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- Favicons -->
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
     
@@ -33,8 +48,7 @@
             font-family: 'Poppins', sans-serif;
             overflow-x: hidden;
             background: linear-gradient(135deg, var(--primary-green), var(--secondary-green));
-            height: 100vh;
-            overflow: hidden;
+            min-height: 100vh;
         }
 
         /* Animated Background */
@@ -86,28 +100,40 @@
 
         /* Main Container */
         .container {
-            height: 100vh;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
             position: relative;
             z-index: 1;
-            overflow: hidden;
         }
 
         /* Header */
         .header {
-            padding: 1.5rem 0;
+            padding: 2rem 1rem 1rem;
             text-align: center;
             position: relative;
         }
 
+        .logo-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .logo-svg {
+            width: 60px;
+            height: 60px;
+            filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.3));
+        }
+
         .logo {
             font-family: 'Playfair Display', serif;
-            font-size: 2.8rem;
+            font-size: 2.5rem;
             font-weight: 700;
             color: var(--warm-white);
             text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-            margin-bottom: 0.3rem;
             letter-spacing: 2px;
         }
 
@@ -124,7 +150,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 1rem 2rem;
+            padding: 1rem;
         }
 
         .content-wrapper {
@@ -199,7 +225,7 @@
             background: rgba(255,255,255,0.1);
             backdrop-filter: blur(20px);
             border-radius: 20px;
-            padding: 2.5rem;
+            padding: 2rem;
             border: 1px solid rgba(255,255,255,0.2);
             box-shadow: 0 20px 40px rgba(0,0,0,0.2);
             width: 100%;
@@ -224,8 +250,9 @@
         }
 
         .countdown {
-            display: flex;
-            justify-content: space-around;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.5rem;
             margin-bottom: 1.5rem;
         }
 
@@ -234,7 +261,7 @@
         }
 
         .countdown-number {
-            font-size: 2rem;
+            font-size: 1.8rem;
             font-weight: 700;
             color: var(--warm-white);
             display: block;
@@ -242,7 +269,7 @@
         }
 
         .countdown-label {
-            font-size: 0.8rem;
+            font-size: 0.7rem;
             color: rgba(255,255,255,0.7);
             text-transform: uppercase;
             letter-spacing: 1px;
@@ -256,15 +283,15 @@
 
         .form-title {
             color: var(--warm-white);
-            font-size: 1.1rem;
-            margin-bottom: 1.2rem;
+            font-size: 1rem;
+            margin-bottom: 1rem;
             text-align: center;
             font-weight: 600;
         }
 
         .input-group {
             position: relative;
-            margin-bottom: 1rem;
+            margin-bottom: 0.8rem;
         }
 
         .form-input {
@@ -312,7 +339,7 @@
 
         /* Contact Info */
         .contact-info {
-            margin-top: 1.5rem;
+            margin: 1rem;
             padding: 1.5rem;
             background: rgba(0,0,0,0.2);
             border-radius: 15px;
@@ -344,6 +371,7 @@
             margin-right: 0.8rem;
             font-size: 1rem;
             width: 16px;
+            flex-shrink: 0;
         }
 
         .contact-item span {
@@ -415,6 +443,33 @@
             color: var(--warm-white);
         }
 
+        /* PWA Install Button */
+        .install-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--accent-gold);
+            color: var(--text-dark);
+            border: none;
+            border-radius: 50px;
+            padding: 12px 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(212, 175, 55, 0.3);
+            z-index: 100;
+            display: none;
+            transition: all 0.3s ease;
+        }
+
+        .install-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .install-btn.visible {
+            display: block;
+        }
+
         /* Animations */
         @keyframes fadeInUp {
             from {
@@ -431,8 +486,21 @@
             animation: fadeInUp 0.8s ease-out;
         }
 
-        /* Responsive Design */
-        @media (max-width: 1024px) {
+        /* Desktop Responsive */
+        @media (min-width: 1025px) {
+            body {
+                height: 100vh;
+                overflow: hidden;
+            }
+            
+            .container {
+                height: 100vh;
+                overflow: hidden;
+            }
+        }
+
+        /* Tablet Responsive */
+        @media (max-width: 1024px) and (min-width: 769px) {
             .content-wrapper {
                 grid-template-columns: 1fr;
                 gap: 2rem;
@@ -447,12 +515,9 @@
                 left: 50%;
                 transform: translateX(-50%);
             }
-
-            .contact-info {
-                margin-top: 1rem;
-            }
         }
 
+        /* Mobile Responsive */
         @media (max-width: 768px) {
             body {
                 overflow-y: auto;
@@ -465,16 +530,49 @@
                 overflow: visible;
             }
 
+            .header {
+                padding: 1rem;
+            }
+
+            .logo-container {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .logo-svg {
+                width: 50px;
+                height: 50px;
+            }
+
+            .logo {
+                font-size: 2rem;
+            }
+
+            .tagline {
+                font-size: 0.9rem;
+            }
+
             .main-content {
                 padding: 1rem;
             }
 
-            .logo {
-                font-size: 2.2rem;
+            .content-wrapper {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+                text-align: center;
+            }
+            
+            .left-section {
+                text-align: center;
             }
             
             .coming-soon {
                 font-size: 2.2rem;
+            }
+
+            .coming-soon::after {
+                left: 50%;
+                transform: translateX(-50%);
             }
             
             .description {
@@ -482,7 +580,7 @@
             }
             
             .interactive-card {
-                padding: 2rem;
+                padding: 1.5rem;
             }
             
             .contact-grid {
@@ -491,8 +589,8 @@
             }
             
             .countdown {
-                flex-wrap: wrap;
-                gap: 0.8rem;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
             }
             
             .countdown-number {
@@ -506,20 +604,29 @@
                 transform: none;
                 text-align: center;
                 padding: 1rem;
-                order: 999;
                 background: rgba(0,0,0,0.2);
                 border-radius: 10px;
-                margin-top: 1rem;
+                margin: 1rem;
+                white-space: normal;
+            }
+
+            .contact-info {
+                margin: 1rem;
             }
         }
 
+        /* Small Mobile */
         @media (max-width: 480px) {
+            .header {
+                padding: 1rem 0.5rem;
+            }
+
             .main-content {
-                padding: 0.8rem;
+                padding: 0.5rem;
             }
             
             .logo {
-                font-size: 1.8rem;
+                font-size: 1.6rem;
             }
             
             .coming-soon {
@@ -527,11 +634,7 @@
             }
             
             .interactive-card {
-                padding: 1.5rem;
-            }
-
-            .header {
-                padding: 1rem 0;
+                padding: 1rem;
             }
 
             .social-links {
@@ -541,6 +644,20 @@
             .social-link {
                 width: 35px;
                 height: 35px;
+                font-size: 0.9rem;
+            }
+
+            .countdown {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 0.5rem;
+            }
+
+            .countdown-number {
+                font-size: 1.2rem;
+            }
+
+            .countdown-label {
+                font-size: 0.6rem;
             }
         }
 
@@ -595,10 +712,65 @@
         &copy; 2025 Dalston Estates Pty Ltd. All rights reserved. | Crafted by <a href="https://lvmre.com" target="_blank" class="designer-credit">LVMRE</a>
     </div>
 
+    <!-- PWA Install Button -->
+    <button class="install-btn" id="installBtn">
+        <i class="fas fa-download"></i> Install App
+    </button>
+
     <div class="container">
         <!-- Header -->
         <header class="header fade-in-up">
-            <h1 class="logo">DALSTON ESTATES</h1>
+            <div class="logo-container">
+                <!-- SVG Logo -->
+                <svg class="logo-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Background Circle -->
+                    <circle cx="50" cy="50" r="48" fill="#2d5016" stroke="#d4af37" stroke-width="2"/>
+                    
+                    <!-- Stylized Farm/Estate Symbol -->
+                    <!-- Main Building/Barn -->
+                    <rect x="35" y="45" width="30" height="20" fill="#d4af37"/>
+                    <polygon points="35,45 50,35 65,45" fill="#4a7c59"/>
+                    
+                    <!-- Windows -->
+                    <rect x="40" y="50" width="4" height="4" fill="#2d5016"/>
+                    <rect x="56" y="50" width="4" height="4" fill="#2d5016"/>
+                    
+                    <!-- Door -->
+                    <rect x="47" y="55" width="6" height="10" fill="#8b4513"/>
+                    
+                    <!-- Wheat/Crop Elements -->
+                    <g stroke="#d4af37" stroke-width="2" fill="none">
+                        <!-- Left wheat -->
+                        <path d="M25,65 Q25,60 27,55 Q29,60 27,65"/>
+                        <path d="M28,65 Q28,60 30,55 Q32,60 30,65"/>
+                        
+                        <!-- Right wheat -->
+                        <path d="M70,65 Q70,60 72,55 Q74,60 72,65"/>
+                        <path d="M73,65 Q73,60 75,55 Q77,60 75,65"/>
+                    </g>
+                    
+                    <!-- Tree -->
+                    <circle cx="20" cy="40" r="8" fill="#4a7c59"/>
+                    <rect x="18" y="40" width="4" height="12" fill="#8b4513"/>
+                    
+                    <!-- Sun -->
+                    <circle cx="75" cy="25" r="6" fill="#d4af37"/>
+                    <g stroke="#d4af37" stroke-width="1">
+                        <line x1="75" y1="15" x2="75" y2="12"/>
+                        <line x1="75" y1="35" x2="75" y2="38"/>
+                        <line x1="85" y1="25" x2="88" y2="25"/>
+                        <line x1="65" y1="25" x2="62" y2="25"/>
+                        <line x1="82" y1="18" x2="84" y2="16"/>
+                        <line x1="68" y1="32" x2="66" y2="34"/>
+                        <line x1="82" y1="32" x2="84" y2="34"/>
+                        <line x1="68" y1="18" x2="66" y2="16"/>
+                    </g>
+                    
+                    <!-- Company Initials -->
+                    <text x="50" y="78" text-anchor="middle" font-family="serif" font-size="8" font-weight="bold" fill="#faf9f6">DE</text>
+                </svg>
+                <h1 class="logo">DALSTON ESTATES</h1>
+            </div>
             <p class="tagline">Premium Agriculture & Commercial Farming Excellence</p>
         </header>
 
@@ -716,6 +888,40 @@
     </div>
 
     <script>
+        // PWA Installation
+        let deferredPrompt;
+        const installBtn = document.getElementById('installBtn');
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            installBtn.classList.add('visible');
+        });
+
+        installBtn.addEventListener('click', async () => {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                const { outcome } = await deferredPrompt.userChoice;
+                if (outcome === 'accepted') {
+                    installBtn.classList.remove('visible');
+                }
+                deferredPrompt = null;
+            }
+        });
+
+        // Service Worker Registration
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then((registration) => {
+                        console.log('SW registered: ', registration);
+                    })
+                    .catch((registrationError) => {
+                        console.log('SW registration failed: ', registrationError);
+                    });
+            });
+        }
+
         // Loading Animation
         window.addEventListener('load', function() {
             setTimeout(() => {
@@ -748,7 +954,6 @@
             }
         }
 
-        // Update countdown every second
         setInterval(updateCountdown, 1000);
         updateCountdown();
 
@@ -756,11 +961,6 @@
         document.getElementById('notifyForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const phone = document.getElementById('phone').value;
-
-            // Simulate form submission
             const btn = document.querySelector('.notify-btn');
             const originalText = btn.innerHTML;
             
@@ -780,7 +980,7 @@
             }, 2000);
         });
 
-        // Add animation on scroll
+        // Intersection Observer for animations
         const observerOptions = {
             threshold: 0.1,
             rootMargin: '0px 0px -50px 0px'
@@ -795,7 +995,6 @@
             });
         }, observerOptions);
 
-        // Observe all fade-in elements
         document.querySelectorAll('.fade-in-up').forEach(el => {
             el.style.opacity = '0';
             el.style.transform = 'translateY(30px)';
@@ -803,47 +1002,39 @@
             observer.observe(el);
         });
 
-        // Particle effect on mouse move (throttled for performance)
+        // Particle effect (mobile optimized)
         let mouseThrottle = false;
         document.addEventListener('mousemove', function(e) {
-            if (!mouseThrottle) {
+            if (!mouseThrottle && window.innerWidth > 768) {
                 mouseThrottle = true;
                 setTimeout(() => {
                     const particle = document.createElement('div');
-                    particle.style.position = 'fixed';
-                    particle.style.left = e.clientX + 'px';
-                    particle.style.top = e.clientY + 'px';
-                    particle.style.width = '3px';
-                    particle.style.height = '3px';
-                    particle.style.background = 'rgba(212, 175, 55, 0.6)';
-                    particle.style.borderRadius = '50%';
-                    particle.style.pointerEvents = 'none';
-                    particle.style.zIndex = '999';
-                    particle.style.animation = 'particleFade 1s ease-out forwards';
+                    particle.style.cssText = `
+                        position: fixed;
+                        left: ${e.clientX}px;
+                        top: ${e.clientY}px;
+                        width: 3px;
+                        height: 3px;
+                        background: rgba(212, 175, 55, 0.6);
+                        border-radius: 50%;
+                        pointer-events: none;
+                        z-index: 999;
+                        animation: particleFade 1s ease-out forwards;
+                    `;
                     
                     document.body.appendChild(particle);
-                    
-                    setTimeout(() => {
-                        particle.remove();
-                    }, 1000);
-                    
+                    setTimeout(() => particle.remove(), 1000);
                     mouseThrottle = false;
-                }, 50);
+                }, 100);
             }
         });
 
-        // Add particle fade animation
+        // Particle animation
         const style = document.createElement('style');
         style.textContent = `
             @keyframes particleFade {
-                0% {
-                    opacity: 1;
-                    transform: scale(1);
-                }
-                100% {
-                    opacity: 0;
-                    transform: scale(0) translateY(-20px);
-                }
+                0% { opacity: 1; transform: scale(1); }
+                100% { opacity: 0; transform: scale(0) translateY(-20px); }
             }
         `;
         document.head.appendChild(style);
