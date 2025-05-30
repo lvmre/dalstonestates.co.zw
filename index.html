@@ -1686,6 +1686,585 @@
             border: 1px solid rgba(212, 175, 55, 0.3);
             transform: translateY(10px);
             opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .tour-tooltip.visible {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .tour-content {
+            padding: 0;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        .tour-header {
+            background: linear-gradient(135deg, var(--primary-green), var(--secondary-green));
+            color: white;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .tour-title {
+            margin: 0;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        .tour-close {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all var(--transition-normal);
+        }
+
+        .tour-close:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.1);
+        }
+
+        .tour-body {
+            padding: 25px;
+        }
+
+        .tour-description {
+            margin: 0 0 20px 0;
+            font-size: 1rem;
+            line-height: 1.6;
+            color: var(--text-dark);
+        }
+
+        .tour-highlights {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+
+        .tour-highlight-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+            color: var(--text-dark);
+        }
+
+        .tour-highlight-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .tour-highlight-item i {
+            color: var(--accent-gold);
+            margin-right: 10px;
+            width: 16px;
+        }
+
+        .tour-footer {
+            padding: 20px 25px;
+            background: #f8f9fa;
+            border-top: 1px solid #e9ecef;
+        }
+
+        .tour-progress {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            gap: 15px;
+        }
+
+        .tour-step-counter {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--primary-green);
+            min-width: 80px;
+        }
+
+        .tour-progress-bar {
+            flex: 1;
+            height: 6px;
+            background: #e9ecef;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .tour-progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-gold), #f4e28c);
+            border-radius: 3px;
+            transition: width 0.5s ease;
+        }
+
+        .tour-controls {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+        }
+
+        .tour-btn-secondary,
+        .tour-btn-primary {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all var(--transition-normal);
+        }
+
+        .tour-btn-secondary {
+            background: #e9ecef;
+            color: var(--text-dark);
+        }
+
+        .tour-btn-secondary:hover {
+            background: #dee2e6;
+        }
+
+        .tour-btn-primary {
+            background: linear-gradient(135deg, var(--accent-gold), #f4e28c);
+            color: var(--text-dark);
+        }
+
+        .tour-btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
+        }
+
+        .tour-btn-primary:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* LVMRE Branding in Tour */
+        .lvmre-showcase {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+            text-align: center;
+        }
+
+        .lvmre-showcase h4 {
+            margin: 0 0 10px 0;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .lvmre-showcase p {
+            margin: 0 0 15px 0;
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .lvmre-cta {
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.8rem;
+            transition: all var(--transition-normal);
+        }
+
+        .lvmre-cta:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-1px);
+        }
+
+        /* Mobile Tour Adjustments */
+        @media (max-width: 768px) {
+            .tour-btn {
+                top: 10px;
+                right: 10px;
+                padding: 10px 16px;
+                font-size: 0.8rem;
+            }
+
+            .tour-tooltip {
+                max-width: calc(100vw - 40px);
+                min-width: calc(100vw - 40px);
+                left: 20px !important;
+                right: 20px !important;
+            }
+
+            .tour-controls {
+                flex-direction: column;
+            }            .tour-btn-secondary,
+            .tour-btn-primary {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        /* Enhanced Interactive Tour Styles */
+        .tour-challenge {
+            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+            border-radius: 10px;
+            padding: 15px;
+            margin: 10px 0;
+            border-left: 4px solid var(--primary-green);
+        }
+
+        .challenge-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .challenge-header h4 {
+            margin: 0;
+            color: var(--primary-green);
+            font-size: 1rem;
+        }
+
+        .challenge-reward {
+            background: var(--accent-gold);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .challenge-description {
+            margin: 10px 0;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .challenge-hint {
+            background: rgba(255, 193, 7, 0.1);
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-style: italic;
+            color: #856404;
+            border-left: 3px solid #ffc107;
+        }
+
+        .tour-achievements {
+            background: linear-gradient(135deg, #f3e5f5, #e1bee7);
+            border-radius: 10px;
+            padding: 15px;
+            margin: 10px 0;
+        }
+
+        .tour-achievements h4 {
+            margin: 0 0 10px 0;
+            color: #7b1fa2;
+            font-size: 1rem;
+        }
+
+        .achievement-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .achievement-badge {
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 20px;
+            padding: 6px 12px;
+            font-size: 0.8rem;
+            border: 1px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .achievement-badge.unlocked {
+            background: linear-gradient(135deg, #ffd700, #ffed4a);
+            color: #8b6914;
+            border-color: #f59e0b;
+            animation: shimmer 2s infinite;
+        }
+
+        .achievement-badge.locked {
+            background: rgba(200, 200, 200, 0.5);
+            color: #666;
+        }
+
+        .tour-easter-egg {
+            background: linear-gradient(135deg, #fff3cd, #ffeaa7);
+            border: 1px solid #ffeaa7;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 10px 0;
+            animation: pulse-glow 3s infinite;
+        }
+
+        .easter-egg-hint {
+            text-align: center;
+        }
+
+        .easter-egg-hint i {
+            color: #f39c12;
+            font-size: 1.2rem;
+            margin-bottom: 8px;
+        }
+
+        .tour-score-display {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border-radius: 10px;
+            padding: 12px;
+            margin: 10px 0;
+            text-align: center;
+        }
+
+        .current-score {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .secrets-count {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+        }
+
+        /* Challenge Modal Styles */
+        .challenge-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10003;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .challenge-modal.visible {
+            opacity: 1;
+        }
+
+        .challenge-content {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            transform: scale(0.8);
+            transition: transform 0.3s ease;
+        }
+
+        .challenge-modal.visible .challenge-content {
+            transform: scale(1);
+        }
+
+        .challenge-content h3 {
+            color: var(--primary-green);
+            margin-bottom: 20px;
+        }
+
+        .challenge-input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            margin: 15px 0;
+            font-size: 1rem;
+        }
+
+        .challenge-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .challenge-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .challenge-btn.primary {
+            background: var(--primary-green);
+            color: white;
+        }
+
+        .challenge-btn.secondary {
+            background: #6c757d;
+            color: white;
+        }
+
+        .challenge-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Animation Classes */
+        @keyframes shimmer {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 5px rgba(243, 156, 18, 0.3); }
+            50% { box-shadow: 0 0 20px rgba(243, 156, 18, 0.6); }
+        }
+
+        @keyframes points-float {
+            0% { transform: translateY(0) scale(1); opacity: 1; }
+            100% { transform: translateY(-30px) scale(1.2); opacity: 0; }
+        }
+
+        .points-animation {
+            position: fixed;
+            z-index: 10004;
+            font-weight: bold;
+            color: #ffd700;
+            font-size: 1.2rem;
+            pointer-events: none;
+            animation: points-float 1.5s ease-out forwards;
+        }
+
+        .achievement-toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #ffd700, #ffed4a);
+            color: #8b6914;
+            padding: 15px 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            z-index: 10005;
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+        }
+
+        .achievement-toast.visible {
+            transform: translateX(0);
+        }
+
+        .celebration-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(255, 215, 0, 0.1), rgba(255, 140, 0, 0.1));
+            z-index: 10001;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 1s ease;
+        }
+
+        .celebration-overlay.visible {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loader-container">
+            <div class="loader"></div>
+            <div class="loading-text">DALSTON ESTATES</div>
+        </div>
+    </div>
+
+    <!-- Background Animation -->
+    <div class="bg-animation">
+        <div class="floating-elements"></div>
+    </div>
+
+    <!-- Vertical Copyright -->
+    <div class="vertical-copyright">
+        &copy; 2025 Dalston Estates Pty Ltd. All rights reserved. | Crafted by <a href="https://lvmre.com" target="_blank" rel="noopener" class="designer-credit">LVMRE</a>
+    </div>    <!-- PWA Install Button -->
+    <button class="install-btn" id="installBtn">
+        <i class="fas fa-download"></i> Install App
+    </button>    <!-- Interactive Tour Button -->
+    <button class="tour-btn" id="tourBtn" title="Take Interactive Tour" aria-label="Take Interactive Tour">
+        <i class="fas fa-route"></i> Take Tour
+    </button>
+
+    <!-- Tour Overlay -->
+    <div class="tour-overlay" id="tourOverlay">
+        <div class="tour-spotlight"></div>
+        <div class="tour-tooltip">
+            <div class="tour-content">
+                <div class="tour-header">
+                    <h3 class="tour-title">Tour Step</h3>                    <button class="tour-close" id="tourClose" title="Close Tour" aria-label="Close Tour">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="tour-body">
+                    <p class="tour-description"></p>
+                    <div class="tour-highlights"></div>
+                </div>
+                <div class="tour-footer">
+                    <div class="tour-progress">
+                        <span class="tour-step-counter"></span>
+                        <div class="tour-progress-bar">
+                            <div class="tour-progress-fill"></div>
+                        </div>
+                    </div>
+                    <div class="tour-controls">
+                        <button class="tour-btn-secondary" id="tourPrev">Previous</button>
+                        <button class="tour-btn-primary" id="tourNext">Next</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="tour-backdrop"></div>
+    </div>
+
+    <!-- Agricultural Progress Seeds -->
+    <div class="progress-seeds" id="progressSeeds">
+        <div class="seed" data-section="header"></div>
+        <div class="seed" data-section="content"></div>
+        <div class="seed" data-section="countdown"></div>
+        <div class="seed" data-section="form"></div>
+        <div class="seed" data-section="contact"></div>
+    </div>
+
+    <div class="container">
+        <!-- Header -->
+        <header class="header fade-in-up">
+            <div class="logo-container">
+                <!-- SVG Logo with Company Name Around Circle -->
+                <svg class="logo-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Outer circle with company name -->
+                    <circle cx="50" cy="50" r="48" fill="none" stroke="#d4af37" stroke-width="2"/>
+                      <!-- Company name curved around the circle -->
+                    <defs>
+                        <path id="circle-text" d="M 50,50 m -45,0 a 45,45 0 1,1 90,0 a 45,45 0 1,1 -90,0"/>
+                    </defs>
+                    <text font-family="Poppins, sans-serif" font-size="7" font-weight="600" fill="#faf9f6" stroke="#2d5016" stroke-width="0.3">
+                        <textPath href="#circle-text" startOffset="2%">
+                            DALSTON ESTATES • PREMIUM AGRICULTURE • 
+                        </textPath>
+                    </text>
+                    
+                    <!-- Inner background circle for acronym -->
+                    <circle cx="50" cy="50" r="35" fill="#2d5016" stroke="#d4af37" stroke-width="1"/>
                     
                     <!-- Agricultural elements around the acronym -->
                     <!-- Wheat stalks -->
