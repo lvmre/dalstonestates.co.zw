@@ -312,6 +312,8 @@
             outline: none;
             border-color: var(--accent-gold);
             background: rgba(255,255,255,0.15);
+            transform: scale(1.02);
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
         }
 
         .form-input::placeholder {
@@ -417,7 +419,7 @@
         .social-link:hover {
             background: var(--accent-gold);
             color: var(--text-dark);
-            transform: translateY(-3px);
+            transform: translateY(-3px) scale(1.1);
         }
 
         /* Vertical Copyright */
@@ -842,6 +844,95 @@
             0%, 100% { opacity: 0.7; }
             50% { opacity: 1; }
         }
+
+        /* Agricultural Progress Indicator */
+        .progress-seeds {
+            position: fixed;
+            top: 50%;
+            right: 20px;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 50;
+        }
+
+        .seed {
+            width: 8px;
+            height: 8px;
+            background: var(--accent-gold);
+            border-radius: 50%;
+            opacity: 0.3;
+            transition: all 0.3s ease;
+        }
+
+        .seed.active {
+            opacity: 1;
+            transform: scale(1.5);
+            box-shadow: 0 0 10px var(--accent-gold);
+        }
+
+        .seed.sprouting {
+            background: var(--secondary-green);
+            border-radius: 50% 50% 50% 0;
+            transform: rotate(45deg) scale(1.2);
+        }
+
+        /* Enhanced Micro-interactions */
+        .interactive-card:hover .countdown-number {
+            transform: scale(1.1);
+            color: var(--accent-gold);
+        }
+
+        /* Accessibility enhancements */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+            
+            .floating-elements::before,
+            .floating-elements::after {
+                animation: none;
+            }
+        }
+
+        /* Countdown Animation */
+        @keyframes countdownAnimation {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        /* Enhanced Button Styles */
+        .notify-btn {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .notify-btn::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 300%;
+            height: 300%;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            transition: transform 0.6s ease;
+            z-index: 0;
+        }
+
+        .notify-btn:hover::after {
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .notify-btn span {
+            position: relative;
+            z-index: 1;
+        }
     </style>
 </head>
 <body>    <!-- Loading Overlay -->
@@ -860,12 +951,19 @@
     <!-- Vertical Copyright -->
     <div class="vertical-copyright">
         &copy; 2025 Dalston Estates Pty Ltd. All rights reserved. | Crafted by <a href="https://lvmre.com" target="_blank" rel="noopener" class="designer-credit">LVMRE</a>
-    </div>
-
-    <!-- PWA Install Button -->
+    </div>    <!-- PWA Install Button -->
     <button class="install-btn" id="installBtn">
         <i class="fas fa-download"></i> Install App
     </button>
+
+    <!-- Agricultural Progress Seeds -->
+    <div class="progress-seeds" id="progressSeeds">
+        <div class="seed" data-section="header"></div>
+        <div class="seed" data-section="content"></div>
+        <div class="seed" data-section="countdown"></div>
+        <div class="seed" data-section="form"></div>
+        <div class="seed" data-section="contact"></div>
+    </div>
 
     <div class="container">
         <!-- Header -->
@@ -1145,6 +1243,9 @@
             
             // Initialize performance monitoring
             monitorPerformance();
+            
+            // Initialize progress seeds animation
+            initializeProgressSeeds();
         }
 
         // Weather widget with random agriculture-focused updates
@@ -1386,6 +1487,127 @@
 
         // Update theme every hour
         setInterval(updateTimeBasedTheme, 3600000);
+
+        // Agricultural progress indicator (simulate planting progress)
+        const seedsContainer = document.querySelector('.progress-seeds');
+        const totalSeeds = 5;
+        let plantedSeeds = 0;
+
+        function plantSeed() {
+            if (plantedSeeds < totalSeeds) {
+                const seed = document.createElement('div');
+                seed.classList.add('seed');
+                seedsContainer.appendChild(seed);
+
+                setTimeout(() => {
+                    seed.classList.add('active');
+                }, 100);
+
+                setTimeout(() => {
+                    seed.classList.add('sprouting');
+                }, 500);
+
+                plantedSeeds++;
+            }
+        }
+
+        // Plant a seed every 2 seconds (simulate)
+        setInterval(plantSeed, 2000);
+
+        // Agricultural progress seeds animation
+        function initializeProgressSeeds() {
+            const seeds = document.querySelectorAll('.seed');
+            const sections = ['header', 'content', 'countdown', 'form', 'contact'];
+            
+            function updateSeeds() {
+                const scrolled = window.scrollY;
+                const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+                const scrollPercent = scrolled / maxScroll;
+                
+                seeds.forEach((seed, index) => {
+                    const threshold = (index + 1) / sections.length;
+                    
+                    if (scrollPercent >= threshold) {
+                        seed.classList.add('sprouting');
+                        seed.classList.remove('active');
+                    } else if (scrollPercent >= threshold - 0.1) {
+                        seed.classList.add('active');
+                        seed.classList.remove('sprouting');
+                    } else {
+                        seed.classList.remove('active', 'sprouting');
+                    }
+                });
+            }
+            
+            // Update on scroll (throttled)
+            let ticking = false;
+            window.addEventListener('scroll', () => {
+                if (!ticking) {
+                    requestAnimationFrame(() => {
+                        updateSeeds();
+                        ticking = false;
+                    });
+                    ticking = true;
+                }
+            });
+            
+            // Initial update
+            updateSeeds();
+        }
+
+        // Enhanced email validation with farming industry specifics
+        function enhanceEmailValidation() {
+            const emailInput = document.getElementById('email');
+            const suggestedDomains = ['gmail.com', 'outlook.com', 'yahoo.com', 'hotmail.com'];
+            
+            emailInput.addEventListener('blur', (e) => {
+                const email = e.target.value;
+                const emailParts = email.split('@');
+                
+                if (emailParts.length === 2) {
+                    const domain = emailParts[1].toLowerCase();
+                    const suggestion = suggestedDomains.find(d => 
+                        d.includes(domain) || domain.includes(d.substring(0, 3))
+                    );
+                    
+                    if (suggestion && domain !== suggestion) {
+                        showEmailSuggestion(emailParts[0] + '@' + suggestion);
+                    }
+                }
+            });
+        }
+
+        function showEmailSuggestion(suggestedEmail) {
+            const existing = document.querySelector('.email-suggestion');
+            if (existing) existing.remove();
+            
+            const suggestion = document.createElement('div');
+            suggestion.className = 'email-suggestion';
+            suggestion.style.cssText = `
+                background: var(--accent-gold);
+                color: var(--text-dark);
+                padding: 5px 10px;
+                border-radius: 5px;
+                font-size: 0.8rem;
+                margin-top: 5px;
+                cursor: pointer;
+                opacity: 0;
+                transition: opacity 0.3s ease;
+            `;
+            suggestion.textContent = `Did you mean: ${suggestedEmail}?`;
+            
+            suggestion.addEventListener('click', () => {
+                document.getElementById('email').value = suggestedEmail;
+                suggestion.remove();
+            });
+            
+            document.getElementById('email').parentNode.appendChild(suggestion);
+            setTimeout(() => suggestion.style.opacity = '1', 100);
+            setTimeout(() => suggestion.remove(), 5000);
+        }
+
+        // Initialize email validation enhancement
+        enhanceEmailValidation();
     </script>
 </body>
 </html>
